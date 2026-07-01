@@ -1,11 +1,10 @@
 # rag-assurance
 
-**Build a small RAG system, then independently validate it.** The flagship pattern of an AI
-*model validator*: a GenAI app is the **system under validation**; an assurance harness adjudicates
-whether its answers are **grounded in the retrieved sources or hallucinated**, and reports an honest
-coverage denominator.
+**Build a small RAG system, then independently validate it.** A GenAI app is the *system under
+validation*; a fail-closed assurance harness adjudicates whether each of its answers is **grounded in
+the retrieved sources or hallucinated**, and reports an honest coverage denominator.
 
-This repo is built in increments so the *assurance core* is real and runnable before any plumbing.
+**▶ Live dashboard:** https://monongahelahellbender.github.io/rag-assurance/
 
 ## Why this exists (the lane)
 
@@ -21,32 +20,44 @@ claim fails it, and anything unverifiable routes to a human. The demo corpus is 
 copyright-free** compliance text written for this project; point it at real **public** documents from
 your target domain (e.g. the NIST AI RMF, U.S.-government public domain) later.
 
-## Roadmap (one project, three skills, built in increments)
+## Roadmap — one project, four skills, all shipped
 
 | # | Increment | Skill it earns | Status |
 |---|-----------|----------------|--------|
-| 1 | Offline **validation core** — RAG pipeline + faithfulness harness, stdlib-only | the assurance spine | **done** |
-| 2 | Real **RAG** path: langchain embedding retriever (Ollama embeddings + vector store) | RAG + langchain | **done** |
-| 3 | **React** dashboard over the validation report (per-case verdicts, drift, coverage) | React front end | next |
-| 4 | **AWS** deploy of the live demo + dashboard | cloud deployment | later |
-
-The point is the spine: even if you stop after increment 1, you have a real model-validation artifact.
+| 1 | Offline **validation core** — RAG pipeline + faithfulness harness, stdlib-only | the assurance spine | ✅ done |
+| 2 | Real **RAG** path — langchain embedding retriever (Ollama embeddings + vector store) | RAG + langchain | ✅ done |
+| 3 | **React** dashboard over the validation report (per-case verdicts, strict gate, coverage) | React front end | ✅ done |
+| 4 | **Cloud deploy** — GitHub Actions CI/CD → GitHub Pages (an AWS S3 script is in `deploy/` too) | cloud deployment | ✅ done |
 
 ## Run it (no installs needed)
 
 ```bash
 # the assurance deliverable — strict validation + the pass/fail gate:
-python scripts/validate.py                              # judge = local Ollama (default)
+python3 scripts/validate.py                             # judge = local Ollama (default)
 
 # test on a FRONTIER model (key stays in your env; only send the synthetic/public corpus):
-RAGASSURANCE_JUDGE=anthropic ANTHROPIC_API_KEY=sk-... python scripts/validate.py
+RAGASSURANCE_JUDGE=anthropic ANTHROPIC_API_KEY=sk-... python3 scripts/validate.py
 
 # see the RAG pipeline (system under validation) retrieve + answer:
-python scripts/run_rag.py "What does a monitoring signal tell you?"
+python3 scripts/run_rag.py "What must source data be under GCP?"
 
 # tests (offline — strict aggregation + fail-closed judge):
-PYTHONPATH=src python -m pytest -q
+PYTHONPATH=src python3 -m pytest -q
 ```
+
+## The dashboard
+
+The React dashboard (`dashboard/`) renders the validation report — metric cards (accuracy,
+hallucination catch, false-flags, coverage, strict-gate pass) plus a per-case table with
+color-coded verdicts and the pass/fail gate. `.github/workflows/deploy.yml` builds it and publishes
+to GitHub Pages on every push. Run it locally:
+
+```bash
+cd dashboard && npm install && npm run dev
+```
+
+The dashboard reads `dashboard/public/report.json`; regenerate that snapshot with
+`python3 scripts/export_report.py`.
 
 ## How the strict scorer + fail-closed judge work
 
@@ -59,9 +70,10 @@ Per-claim adjudication lives in `validation/judge.py → judge_claim`, the **fai
 tries a deterministic match first, then asks an LLM to PROPOSE support *with a quoted sentence*, and
 **deterministically checks the quote really occurs in the context** (fabricated evidence is rejected
 to DEFER). So the LLM can never produce a wrong GROUNDED — a model mistake only lowers coverage. Runs
-on a local Ollama model or a frontier model (`RAGASSURANCE_JUDGE=anthropic`).
+on a local Ollama model or a frontier model (`RAGASSURANCE_JUDGE=anthropic`). See
+[`docs/three_judge_comparison.md`](docs/three_judge_comparison.md) for a three-judge study.
 
-## Increment 2 — langchain embedding retrieval
+## langchain embedding retrieval
 
 The default retriever is a stdlib TF-IDF (lexical). The **langchain** path swaps in real embedding
 retrieval (Ollama embeddings + a vector store) behind the same `.retrieve(query, k)` interface, so
@@ -74,21 +86,23 @@ ollama pull nomic-embed-text          # chat models can't embed; this is the ded
 ./.venv/bin/python scripts/run_rag.py --langchain "Who can consent for a participant who cannot consent themselves?"
 ```
 
-`RAGASSURANCE_EMBED_MODEL` overrides the embedder. Note: the langchain stack installs on Python
-3.14 only in the pure-Python configuration used here (no faiss) — retrieval uses langchain's
-`InMemoryVectorStore`.
+`RAGASSURANCE_EMBED_MODEL` overrides the embedder. The langchain stack installs on Python 3.14 in the
+pure-Python configuration used here (no faiss) — retrieval uses langchain's `InMemoryVectorStore`.
 
 ## Layout
 
 ```
-corpus/                         synthetic, copyright-free compliance docs
+corpus/                         synthetic, copyright-free clinical/pharma docs
 src/ragassurance/
-  corpus.py  retriever.py  generator.py  pipeline.py    the RAG system under validation
+  corpus.py  retriever.py  langchain_retriever.py  generator.py  pipeline.py   the system under validation
   validation/
     faithfulness.py             strict claim-split + aggregation ("a bad claim is a fail")
     judge.py                    judge_claim — deterministic-first, LLM cite-and-verify, fail-closed
     fixtures.py                 labeled grounded / hallucinated / partial cases
     harness.py                  runs the scorer, reports the validation summary + strict gate
-scripts/  validate.py  run_rag.py
+dashboard/                      React (Vite) dashboard over the validation report
+scripts/  validate.py  run_rag.py  export_report.py  check_anthropic.py  debug_judge.py
+deploy/   deploy_s3.sh + runbook (AWS S3 alternative to GitHub Pages)
+docs/     three_judge_comparison.md
 tests/    test_harness.py  test_judge.py
 ```
