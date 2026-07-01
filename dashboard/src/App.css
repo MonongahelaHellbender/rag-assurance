@@ -1,0 +1,164 @@
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+
+header h1 {
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: #12151c;
+}
+
+.sub {
+  color: #6b7280;
+  font-size: 13px;
+}
+.sub b {
+  color: #374151;
+  font-weight: 600;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 24px 0 28px;
+}
+
+.metric {
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.metric-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: #12151c;
+}
+.metric-total {
+  font-size: 16px;
+  color: #9aa1ac;
+  font-weight: 500;
+}
+.metric-label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 4px;
+  color: #374151;
+}
+.metric-hint {
+  font-size: 11px;
+  color: #8b929c;
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+th {
+  text-align: left;
+  padding: 11px 12px;
+  background: #f0f2f5;
+  color: #4b5563;
+  font-weight: 600;
+  font-size: 12px;
+  border-bottom: 1px solid #e6e8ec;
+}
+
+td {
+  padding: 11px 12px;
+  border-bottom: 1px solid #eef0f3;
+  vertical-align: middle;
+}
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.mono {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+.q {
+  max-width: 260px;
+  color: #374151;
+}
+.muted {
+  color: #8b929c;
+}
+.small {
+  font-size: 11px;
+}
+.ok {
+  color: #15803d;
+  font-weight: 700;
+}
+.no {
+  color: #b91c1c;
+  font-weight: 700;
+}
+.err {
+  color: #b91c1c;
+}
+
+.pill {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.v-grounded {
+  background: #e7f6ec;
+  color: #15803d;
+}
+.v-unsupported {
+  background: #fdeaea;
+  color: #b91c1c;
+}
+.v-partial {
+  background: #fdf3e3;
+  color: #b45309;
+}
+.v-defer {
+  background: #eef0f3;
+  color: #6b7280;
+}
+
+.gate {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.gate.pass {
+  background: #e7f6ec;
+  color: #15803d;
+}
+.gate.fail {
+  background: #fdeaea;
+  color: #b91c1c;
+}
+
+footer {
+  margin-top: 20px;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.6;
+}
+footer b {
+  color: #374151;
+}

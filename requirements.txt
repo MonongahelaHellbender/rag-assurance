@@ -1,0 +1,14 @@
+# Increment 1 (validation core) — standard library only, runs with plain python3.
+#
+# Increment 2 (langchain RAG retrieval) — install into an isolated project venv:
+#     python3 -m venv .venv
+#     ./.venv/bin/pip install -r requirements.txt
+#     ollama pull nomic-embed-text        # dedicated embedder (chat models can't embed)
+# then:  ./.venv/bin/python scripts/run_rag.py --langchain "..."
+langchain-core
+langchain-ollama
+langchain-text-splitters
+numpy
+
+# Dev:
+#   pytest

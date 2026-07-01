@@ -1,0 +1,115 @@
+{
+  "generated_at": "2026-06-30T22:12:18",
+  "backend": "ollama",
+  "domain": "clinical / pharma",
+  "metrics": {
+    "accuracy": [
+      5,
+      5
+    ],
+    "hallucination_catch": [
+      2,
+      2
+    ],
+    "false_flags": [
+      0,
+      2
+    ],
+    "coverage": [
+      5,
+      5
+    ],
+    "gate_pass": [
+      2,
+      5
+    ]
+  },
+  "cases": [
+    {
+      "id": "grounded_clean",
+      "question": "What must source data be under GCP?",
+      "verdict": "GROUNDED",
+      "gold": "GROUNDED",
+      "correct": true,
+      "gate_pass": true,
+      "score": 1.0,
+      "supported": 1,
+      "unsupported": 0,
+      "deferred": 0,
+      "tiers": [
+        "llm-verified"
+      ],
+      "note": "1 supported / 0 unsupported / 0 unverifiable across 1 claim(s)",
+      "why": "faithful restatement \u2014 any sound scorer should pass this"
+    },
+    {
+      "id": "blatant_hallucination",
+      "question": "What does GCP require about trial timelines?",
+      "verdict": "UNSUPPORTED",
+      "gold": "UNSUPPORTED",
+      "correct": true,
+      "gate_pass": false,
+      "score": 0.0,
+      "supported": 0,
+      "unsupported": 1,
+      "deferred": 0,
+      "tiers": [
+        "llm"
+      ],
+      "note": "0 supported / 1 unsupported / 0 unverifiable across 1 claim(s)",
+      "why": "asserts a rule absent from the context, in different words (low overlap)"
+    },
+    {
+      "id": "paraphrase_grounded",
+      "question": "Who can consent for a participant who cannot consent themselves?",
+      "verdict": "GROUNDED",
+      "gold": "GROUNDED",
+      "correct": true,
+      "gate_pass": true,
+      "score": 1.0,
+      "supported": 1,
+      "unsupported": 0,
+      "deferred": 0,
+      "tiers": [
+        "llm-verified"
+      ],
+      "note": "1 supported / 0 unsupported / 0 unverifiable across 1 claim(s)",
+      "why": "correct but PARAPHRASED \u2014 low lexical overlap; needs a semantic (LLM) check"
+    },
+    {
+      "id": "sneaky_hallucination",
+      "question": "What does an approved drug label describe?",
+      "verdict": "UNSUPPORTED",
+      "gold": "UNSUPPORTED",
+      "correct": true,
+      "gate_pass": false,
+      "score": 0.0,
+      "supported": 0,
+      "unsupported": 1,
+      "deferred": 0,
+      "tiers": [
+        "llm"
+      ],
+      "note": "0 supported / 1 unsupported / 0 unverifiable across 1 claim(s)",
+      "why": "reuses many source words (high overlap) but appends a false guarantee \u2014 the label in fact lists known adverse reactions"
+    },
+    {
+      "id": "partial_mixed",
+      "question": "What is a serious adverse event and how is it reported?",
+      "verdict": "PARTIAL",
+      "gold": "PARTIAL",
+      "correct": true,
+      "gate_pass": false,
+      "score": 0.5,
+      "supported": 1,
+      "unsupported": 1,
+      "deferred": 0,
+      "tiers": [
+        "llm",
+        "llm-verified"
+      ],
+      "note": "1 supported / 1 unsupported / 0 unverifiable across 2 claim(s)",
+      "why": "first claim grounded; second contradicts the context (only serious, unexpected, related events are expedited \u2014 not every event within 24 hours)"
+    }
+  ]
+}

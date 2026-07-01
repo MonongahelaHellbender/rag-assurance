@@ -1,0 +1,3 @@
+# Pharmacovigilance and Adverse Event Reporting
+
+Pharmacovigilance is the practice of detecting, assessing, and preventing adverse effects of a medicine after it reaches patients. A serious adverse event is any untoward medical occurrence that results in death, is life-threatening, requires hospitalization, or causes a persistent disability. Serious events that are unexpected and suspected to be related to the drug are reported to regulators on an expedited timeline; other events are summarized in periodic safety reports. A causality assessment estimates whether the drug, rather than another factor, caused the event.
