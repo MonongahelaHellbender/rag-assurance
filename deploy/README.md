@@ -43,7 +43,7 @@ same command — `aws s3 sync --delete` updates only what changed.
 - **Cost:** within free tier for this traffic. Set a small AWS Budgets alert (e.g. $5) so you're
   notified if anything unexpected accrues.
 
-## Production-grade upgrade (optional, more resume-worthy)
+## Production-grade upgrade (optional)
 
 For HTTPS, a CDN, and **no public bucket**, front a *private* S3 bucket with **CloudFront + Origin
 Access Control (OAC)**. That's the pattern a security-minded model-risk engineer would actually
@@ -53,5 +53,5 @@ Ask and I'll write the CloudFront version of the deploy.
 ## Free alternative (no AWS account)
 
 If you want a live URL today without an AWS account/billing: push `rag-assurance` to a public GitHub
-repo and use **GitHub Pages** or **Cloudflare Pages** (both free). That also counts as cloud
-deployment on a résumé — it just isn't AWS specifically.
+repo and use **GitHub Pages** or **Cloudflare Pages** (both free). That's also a real cloud
+deployment — it just isn't AWS specifically.
