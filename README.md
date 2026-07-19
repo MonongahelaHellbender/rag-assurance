@@ -109,4 +109,28 @@ tests/    test_harness.py  test_judge.py
 
 ---
 
+## Prior art (no novelty claimed)
+
+This is an implementation, not a new mechanism. Cite-and-verify grounding, fail-closed refusal, and
+a coverage denominator are established practice:
+
+- **Necula, Proof-Carrying Code** (POPL 1997) — the artifact carries what makes it checkable.
+- **Rashkin et al., Attributable to Identified Sources (AIS)** — the attribution framework for
+  judging whether a generated statement is supported by its cited source.
+- **Chow (1970)**, *On optimum recognition error and reject tradeoff* — the reject option and the
+  error-versus-coverage tradeoff.
+- **AWS Bedrock Guardrails** (contextual grounding, 2024) and comparable production filters — these
+  already *block* sub-threshold responses rather than warning. Blocking is not a differentiator.
+- **Anthropic Citations API** and the attributed-QA line (Bohnet et al. 2022; ALCE; FActScore) —
+  verifying generated claims against retrieved sources at scale.
+- **SR 11-7** (Fed/OCC model risk guidance) — ongoing monitoring and outcomes analysis, the
+  model-risk framing this repo adopts.
+
+A 2026-07-19 problem-shaped prior-art audit alleged this README claimed to differ from permissive
+validators by blocking rather than warning. **That claim was not present** in the live README and
+this file does not concede it; the audit's quote could not be verified against the artifact. This
+section is added because the repo had no prior-art section at all, which is a real gap regardless.
+
+---
+
 *Part of a portfolio of refusal-first AI-assurance & verification tools — [github.com/MonongahelaHellbender](https://github.com/MonongahelaHellbender). Related: [rag-triad](https://github.com/MonongahelaHellbender/rag-triad) · [honesty-atlas](https://github.com/MonongahelaHellbender/honesty-atlas) · [assurance-compiler](https://github.com/MonongahelaHellbender/assurance-compiler) · [gradeability-audit](https://github.com/MonongahelaHellbender/gradeability-audit) · [oracle-shield](https://github.com/MonongahelaHellbender/oracle-shield) · [rag-assurance](https://github.com/MonongahelaHellbender/rag-assurance).*
